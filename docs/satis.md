@@ -31,7 +31,7 @@ $request = $client->createPaymentRequestBuilder()
     ->buildCard('4282209027132016', '123', 5, 2019)
     ->buildOrder('ORDERNO123456', '127.0.0.1')
     ->buildBilling('John', 'Smith', 'test@test.net', '05321231212')
-    ->buildAndAddProduct('The Product', 'PR1', 1, 10)
+    ->buildAndAddProduct('The Product', 'PR1', 1, null, 0.1)
     ->build();
 ```
 
