@@ -12,7 +12,7 @@ class SellerRequestSerializer extends SerializerAbstract
         $filteredData = array_filter($this->serializeSeller());
 
         return $filteredData + [
-            'signature' => $this->calculateHash($filteredData),
+            'signature' => $this->calculateHashForMerchant($filteredData),
         ];
     }
 
@@ -21,7 +21,7 @@ class SellerRequestSerializer extends SerializerAbstract
      *
      * @return string
      */
-    protected function calculateHash(&$rawData)
+    protected function calculateHashForMerchant(&$rawData)
     {
         ksort($rawData);
         $rawData['timestamp'] = time();
