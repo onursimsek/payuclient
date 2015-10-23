@@ -4,42 +4,109 @@ namespace Payu\Component;
 class Seller
 {
 
+    /**
+     * Kurumsal mağaza
+     */
+    const TYPE_BUSINESS = 'BUSINESS';
+
+    /**
+     * Bireysel mağaza
+     */
+    const TYPE_INDIVIDUAL = 'INDIVIDUAL';
+
+    /**
+     * @var string
+     */
     private $type;
 
+    /**
+     * @var null|string
+     */
     private $homepage;
 
+    /**
+     * @var null|string
+     */
     private $companyName;
 
+    /**
+     * @var null|string
+     */
     private $fiscalCode;
 
+    /**
+     * @var string
+     */
     private $registrationNumber;
 
+    /**
+     * @var string
+     */
     private $address;
 
+    /**
+     * @var string
+     */
     private $city;
 
+    /**
+     * @var null|string
+     */
     private $state;
 
+    /**
+     * @var integer
+     */
     private $zip;
 
+    /**
+     * @var string
+     */
     private $countryCode;
 
+    /**
+     * @var string
+     */
     private $phone;
 
+    /**
+     * @var null|string
+     */
     private $fax;
 
+    /**
+     * @var null|string
+     */
     private $techPhone;
 
+    /**
+     * @var null|string
+     */
     private $techEmail;
 
+    /**
+     * @var null|string
+     */
     private $techWeb;
 
+    /**
+     * @var string
+     */
     private $firstName;
 
+    /**
+     * @var string
+     */
     private $lastName;
 
+    /**
+     * @var string
+     */
     private $email;
 
+    /**
+     * @var string string
+     */
     private $automaticEmail;
 
     /**
