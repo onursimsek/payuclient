@@ -25,10 +25,11 @@ class PaymentResponse extends ResponseAbstract
      * @param string $transactionId
      * @param string $hash
      * @param string $url3DS
+     * @param string $rawData
      */
-    public function __construct($status, $code, $message, $transactionId, $hash, $url3DS)
+    public function __construct($status, $code, $message, $transactionId, $hash, $url3DS, $rawData)
     {
-        parent::__construct($status, $code, $message);
+        parent::__construct($status, $code, $message, $rawData);
         $this->setTransactionId($transactionId);
         $this->setHash($hash);
         $this->setUrl3DS($url3DS);
