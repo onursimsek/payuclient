@@ -1,17 +1,21 @@
 <?php
 namespace Payu;
 
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Payu\Builder\LoyaltyInquiryRequestBuilder;
 use Payu\Builder\PaymentRequestBuilder;
+use Payu\Builder\SellerRequestBuilder;
 use Payu\Exception\ConnectionError;
 use Payu\Parser\LoyaltyInquiryResponseParser;
 use Payu\Parser\PaymentResponseParser;
 use Payu\Parser\ResponseParser;
+use Payu\Parser\SellerCreateResponseParser;
+use Payu\Parser\SellerGetterResponseParser;
 use Payu\Request\LoyaltyInquiryRequest;
 use Payu\Request\PaymentRequest;
 use Payu\Request\RequestAbstract;
-
+use Payu\Request\SellerRequest;
 
 class Client
 {
@@ -44,6 +48,11 @@ class Client
         return new LoyaltyInquiryRequestBuilder($this->configuration);
     }
 
+    public function createMarketplaceSellerBuilder()
+    {
+        return new SellerRequestBuilder($this->configuration);
+    }
+
     /**
      * @param RequestAbstract $request
      * @param string          $endpointUrl
@@ -60,12 +69,15 @@ class Client
             ],
         ]);
 
-        $httpRequest = $client->request('POST', $endpointUrl, [
-            'form_params' => $request->getRawData(),
-        ]);
-
         try {
+            $httpRequest = $client->request('POST', $endpointUrl, [
+                'form_params' => $request->getRawData(),
+            ]);
+
             return $httpRequest->getBody()->getContents();
+
+        } catch (ClientException $e) {
+            return $e->getResponse()->getBody()->getContents();
         } catch (RequestException $e) {
             throw new ConnectionError($e->getMessage());
         }
@@ -96,4 +108,26 @@ class Client
 
         return $parser->parse();
     }
-} 
+
+    /**
+     * @param SellerRequest $request
+     *
+     * @return Response\SellerCreateResponse
+     * @throws ConnectionError
+     */
+    public function createSeller(SellerRequest $request)
+    {
+        $response = $this->sendRequest($request, $this->configuration->getMarketplaceEndpointUrl());
+        $parser   = new ResponseParser(new SellerCreateResponseParser(), $response);
+
+        return $parser->parse();
+    }
+
+    public function getSeller(SellerRequest $request)
+    {
+        $response = $this->sendRequest($request, $this->configuration->getMarketplaceEndpointUrl());
+        $parser   = new ResponseParser(new SellerGetterResponseParser(), $response);
+
+        return $parser->parse();
+    }
+}
