@@ -72,6 +72,12 @@ class LoyaltyInquiryResponse extends ResponseAbstract
      * @param integer $status
      * @param string $code
      * @param string $message
+     * @param $points
+     * @param $amount
+     * @param $currency
+     * @param $bank
+     * @param $cardProgramName
+     * @param $rawData
      */
     public function __construct
     (
@@ -82,10 +88,10 @@ class LoyaltyInquiryResponse extends ResponseAbstract
         $amount,
         $currency,
         $bank,
-        $cardProgramName
-    )
-    {
-        parent::__construct($status, $code, $message);
+        $cardProgramName,
+        $rawData
+    ) {
+        parent::__construct($status, $code, $message, $rawData);
         $this->points = $points;
         $this->amount = $amount;
         $this->currency = $currency;

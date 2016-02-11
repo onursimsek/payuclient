@@ -24,6 +24,11 @@ abstract class ResponseAbstract
     protected $message;
 
     /**
+     * @var string
+     */
+    protected $rawData;
+
+    /**
      * @param string $code
      * @return $this
      */
@@ -78,14 +83,32 @@ abstract class ResponseAbstract
     }
 
     /**
+     * @return string
+     */
+    public function getRawData()
+    {
+        return $this->rawData;
+    }
+
+    /**
+     * @param string $rawData
+     */
+    public function setRawData($rawData)
+    {
+        $this->rawData = $rawData;
+    }
+
+    /**
      * @param integer $status
      * @param string $code
      * @param string $message
+     * @param $rawData
      */
-    public function __construct($status, $code, $message)
+    public function __construct($status, $code, $message, $rawData)
     {
         $this->setStatus($status);
         $this->setCode($code);
         $this->setMessage($message);
+        $this->setRawData($rawData);
     }
 } 

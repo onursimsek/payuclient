@@ -32,7 +32,7 @@ class PaymentResponseParser implements ParserInterface
         $hash = isset($xml->HASH) ? (string) $xml->HASH : null;
         $url3DS = isset($xml->URL_3DS) ? (string) $xml->URL_3DS : null;
 
-        return new PaymentResponse($statusCode, $code, $message, $transactionId, $hash, $url3DS);
+        return new PaymentResponse($rawData, $statusCode, $code, $message, $transactionId, $hash, $url3DS);
     }
 
     private function parseStatusCode($status, $code)

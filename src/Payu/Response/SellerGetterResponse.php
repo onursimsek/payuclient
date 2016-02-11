@@ -110,8 +110,16 @@ class SellerGetterResponse extends ResponseAbstract
     protected $accountBalance;
 
     /**
+     * @var array
+     */
+    protected $errorFields;
+
+    /**
      * SellerGetterResponse constructor.
      *
+     * @param int $status
+     * @param string $code
+     * @param string $message
      * @param string $sellerType
      * @param string $sellerCode
      * @param string $homePage
@@ -132,9 +140,14 @@ class SellerGetterResponse extends ResponseAbstract
      * @param string $lastName
      * @param string $email
      * @param string $kycStatus
-     * @param int    $accountBalance
+     * @param int $accountBalance
+     * @param array $errorFields
+     * @param $rawData
      */
     public function __construct(
+        $status,
+        $code,
+        $message,
         $sellerType,
         $sellerCode,
         $homePage,
@@ -155,29 +168,34 @@ class SellerGetterResponse extends ResponseAbstract
         $lastName,
         $email,
         $kycStatus,
-        $accountBalance
+        $accountBalance,
+        $errorFields = [],
+        $rawData
     ) {
-        $this->sellerType         = $sellerType;
-        $this->sellerCode         = $sellerCode;
-        $this->homePage           = $homePage;
-        $this->companyName        = $companyName;
-        $this->fiscalCode         = $fiscalCode;
+        parent::__construct($status, $code, $message, $rawData);
+
+        $this->sellerType = $sellerType;
+        $this->sellerCode = $sellerCode;
+        $this->homePage = $homePage;
+        $this->companyName = $companyName;
+        $this->fiscalCode = $fiscalCode;
         $this->registrationNumber = $registrationNumber;
-        $this->address            = $address;
-        $this->city               = $city;
-        $this->state              = $state;
-        $this->zip                = $zip;
-        $this->countryCode        = $countryCode;
-        $this->phone              = $phone;
-        $this->fax                = $fax;
-        $this->techPhone          = $techPhone;
-        $this->techEmail          = $techEmail;
-        $this->techWeb            = $techWeb;
-        $this->firstName          = $firstName;
-        $this->lastName           = $lastName;
-        $this->email              = $email;
-        $this->kycStatus          = $kycStatus;
-        $this->accountBalance     = $accountBalance;
+        $this->address = $address;
+        $this->city = $city;
+        $this->state = $state;
+        $this->zip = $zip;
+        $this->countryCode = $countryCode;
+        $this->phone = $phone;
+        $this->fax = $fax;
+        $this->techPhone = $techPhone;
+        $this->techEmail = $techEmail;
+        $this->techWeb = $techWeb;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->kycStatus = $kycStatus;
+        $this->accountBalance = $accountBalance;
+        $this->errorFields = $errorFields;
     }
 
     /**

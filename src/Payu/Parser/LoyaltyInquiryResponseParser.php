@@ -39,6 +39,6 @@ class LoyaltyInquiryResponseParser implements ParserInterface
         }
 
         return new LoyaltyInquiryResponse($status, $code, $message, $points, $amount, $currency, $bank,
-            $cardProgramName);
+            $cardProgramName, $rawData);
     }
 }

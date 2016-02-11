@@ -15,15 +15,16 @@ class SellerCreateResponse extends ResponseAbstract
     protected $errorFields;
 
     /**
-     * @param int    $status
+     * @param int $status
      * @param string $code
      * @param string $message
      * @param string $sellerCode
-     * @param        $errorFields
+     * @param array $errorFields
+     * @param $rawData
      */
-    public function __construct($status, $code, $message, $sellerCode, $errorFields = [])
+    public function __construct($status, $code, $message, $sellerCode, $errorFields = [], $rawData)
     {
-        parent::__construct($status, $code, $message);
+        parent::__construct($status, $code, $message, $rawData);
 
         $this->sellerCode  = $sellerCode;
         $this->errorFields = $errorFields;

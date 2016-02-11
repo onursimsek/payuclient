@@ -21,7 +21,8 @@ class SellerCreateResponseParser implements ParserInterface
             $json->meta->response->httpMessage,
             $json->meta->status->message,
             !empty($json->sellerCode) ? $json->sellerCode : null,
-            $json->meta->response->httpCode == ResponseAbstract::STATUS_INPUT_ERROR ? $json->errors : []
+            $json->meta->response->httpCode == ResponseAbstract::STATUS_INPUT_ERROR ? $json->errors : [],
+            $response
         );
     }
 
