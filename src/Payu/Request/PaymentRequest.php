@@ -29,6 +29,11 @@ class PaymentRequest extends RequestAbstract
     private $basket;
 
     /**
+     * @var string
+     */
+    private $seller;
+
+    /**
      * @param \Payu\Component\Basket $basket
      * @return $this
      */
@@ -118,12 +123,31 @@ class PaymentRequest extends RequestAbstract
         return $this->order;
     }
 
-    public function __construct($card = null, $order = null, $billing = null, $delivery = null, $basket = null)
+    /**
+     * @param string $seller
+     * @return $this
+     */
+    public function setSeller($seller)
+    {
+        $this->seller = $seller;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeller()
+    {
+        return $this->seller;
+    }
+
+    public function __construct($card = null, $order = null, $billing = null, $delivery = null, $basket = null, $seller = null)
     {
         $this->setCard($card);
         $this->setOrder($order);
         $this->setBilling($billing);
         $this->setDelivery($delivery);
         $this->setBasket($basket);
+        $this->setSeller($seller);
     }
 } 

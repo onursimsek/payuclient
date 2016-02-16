@@ -32,22 +32,33 @@ class PaymentResponseParser implements ParserInterface
         $hash = isset($xml->HASH) ? (string) $xml->HASH : null;
         $url3DS = isset($xml->URL_3DS) ? (string) $xml->URL_3DS : null;
 
-        return new PaymentResponse($rawData, $statusCode, $code, $message, $transactionId, $hash, $url3DS);
+        return new PaymentResponse($statusCode, $code, $message, $transactionId, $hash, $url3DS, $rawData);
     }
 
     private function parseStatusCode($status, $code)
     {
-        $statusCode = null;
-
-        if ($status == 'SUCCESS') {
-            if ($code == 'AUTHORIZED') {
-                $statusCode = ResponseAbstract::STATUS_APPROVED;
-            } else if ($code == '3DS_ENROLLED') {
-                $statusCode = ResponseAbstract::STATUS_UNAUTHORIZED;
-            }
+        switch ($status) {
+            case 'SUCCESS':
+                switch ($code) {
+                    case '3DS_ENROLLED':
+                        return ResponseAbstract::STATUS_UNAUTHORIZED;
+                        break;
+                    case 'AUTHORIZED':
+                    default:
+                        return ResponseAbstract::STATUS_APPROVED;
+                        break;
+                }
+                break;
+            case 'FAILED':
+                return ResponseAbstract::STATUS_FAILED;
+                break;
+            case 'INPUT_ERROR':
+                return ResponseAbstract::STATUS_INPUT_ERROR;
+                break;
+            default:
+                return ResponseAbstract::STATUS_FAILED;
+                break;
         }
-
-        return $statusCode;
     }
 
     private function parseTransactionId($refNo, $statusCode)

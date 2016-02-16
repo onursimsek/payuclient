@@ -33,6 +33,8 @@ class PaymentRequestBuilder extends BuilderAbstract
      */
     protected $basket;
 
+    protected $seller;
+
     /**
      * @param $code
      * @param $clientIp
@@ -221,9 +223,19 @@ class PaymentRequestBuilder extends BuilderAbstract
         $this->basket = new Basket();
     }
 
+    /**
+     * @param $seller
+     * @return $this
+     */
+    public function setSeller($seller)
+    {
+        $this->seller = $seller;
+        return $this;
+    }
+
     public function build()
     {
-        $request = new PaymentRequest($this->card, $this->order, $this->billing, $this->delivery, $this->basket);
+        $request = new PaymentRequest($this->card, $this->order, $this->billing, $this->delivery, $this->basket, $this->seller);
 
         $validator = new PaymentRequestValidator($request);
         $validator->validate();
@@ -231,8 +243,6 @@ class PaymentRequestBuilder extends BuilderAbstract
         $serializer = new PaymentRequestSerializer($request, $this->configuration);
         $rawData = $serializer->serialize();
 
-        $request->setRawData($rawData);
-
-        return $request;
+        return $request->setRawData($rawData);
     }
 }

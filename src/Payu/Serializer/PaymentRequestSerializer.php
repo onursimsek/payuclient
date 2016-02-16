@@ -10,7 +10,7 @@ class PaymentRequestSerializer extends SerializerAbstract
     {
         /** @var $order \Payu\Component\Order */
         $order = $this->request->getOrder();
-        
+
         $data = array(
             'ORDER_REF'                    => $order->getCode(),
             'ORDER_DATE'                   => $order->getDate(),
@@ -105,6 +105,15 @@ class PaymentRequestSerializer extends SerializerAbstract
         return $data;
     }
 
+    private function serializeSeller()
+    {
+        return $this->request->getSeller()
+            ? [
+                'ORDER_MPLACE_MERCHANT[0]' => $this->request->getSeller(),
+            ]
+            : [];
+    }
+
     /**
      * @return serialize
      */
@@ -115,7 +124,8 @@ class PaymentRequestSerializer extends SerializerAbstract
             $this->serializeOrder(),
             $this->serializeBilling(),
             $this->serializeDelivery(),
-            $this->serializeBasket()
+            $this->serializeBasket(),
+            $this->serializeSeller()
         );
 
         $filteredData               = array_filter($concatenatedData);
